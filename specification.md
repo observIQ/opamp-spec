@@ -248,6 +248,7 @@ message ServerToAgent {
     AgentPackageAvailable agent_package_available = 6;
     Flags flags = 7;
     ServerCapabilities capabilities = 8;
+    ServerCommand command = 9
 }
 ```
 
@@ -352,9 +353,33 @@ enum ServerCapabilities {
     AcceptsAgentPackageStatus      = 0x00000040;
     // The Server can offer connection settings.
     OffersConnectionSettings       = 0x00000080;
+    // The Agent can accept restart requests.
+    AcceptsRestartRequests         = 0x00001000;
+    // The Agent can accept shutdown requests.
+    AcceptsShutdownRequests        = 0x00002000;
 
     // Add new capabilities here, continuing with the least significant unused bit.
 }
+```
+
+#### command
+
+Defined by CommandType enum. This field is set when the server wants the agent to
+perform a restart or shutdown command. This field must not be set with other fields
+besides instance_uid or capabilities. All other fields will be ignored and the
+agent will execute the command.
+
+```protobuf
+enum CommandType {
+    // The agent should restart. This request will be ignored if the agent does not
+    // support restart.
+    Restart = 0;
+
+    // The agent should shutdown. This request will be ignored if the agent does not
+    // support shutdown. Shutdown is permanent and the agent will no longer be running
+    // or connected to the management server.
+    Shutdown = 1;
+    }
 ```
 
 
