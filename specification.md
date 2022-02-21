@@ -353,10 +353,6 @@ enum ServerCapabilities {
     AcceptsAgentPackageStatus      = 0x00000040;
     // The Server can offer connection settings.
     OffersConnectionSettings       = 0x00000080;
-    // The Agent can accept restart requests.
-    AcceptsRestartRequests         = 0x00001000;
-    // The Agent can accept shutdown requests.
-    AcceptsShutdownRequests        = 0x00002000;
 
     // Add new capabilities here, continuing with the least significant unused bit.
 }
@@ -379,7 +375,7 @@ enum CommandType {
     // support shutdown. Shutdown is permanent and the agent will no longer be running
     // or connected to the management server.
     Shutdown = 1;
-    }
+}
 ```
 
 
@@ -644,6 +640,10 @@ enum AgentCapabilities {
     // The can accept connections settings for other destinations via
     // ConnectionSettingsOffers.other_connections field.
     AcceptsOtherConnectionSettings = 0x00000800;
+    // The Agent can accept restart requests.
+    AcceptsRestartRequests         = 0x00001000;
+    // The Agent can accept shutdown requests.
+    AcceptsShutdownRequests        = 0x00002000;
 
     // Add new capabilities here, continuing with the least significant unused bit.
 }
@@ -2448,7 +2448,7 @@ TBD
 * Do we need to define OpenTelemetry semantic conventions for reporting typical
   collection Agent-specific metrics (e.g. input/processing/output data rates,
   throughput, latency, etc)?
-* Do we need a capability for the Server to order the Agent to restart?
+* ~~Do we need a capability for the Server to order the Agent to restart?~~ Added.
 * Do we need Agent-initiated client certificate rotation capability (in addition
   to Server-initiated that we already have)?
 * Do we need to recommend the Agent to cache the remote config and OTLP metric
