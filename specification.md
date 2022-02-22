@@ -360,7 +360,7 @@ enum ServerCapabilities {
 
 #### command
 
-Defined by CommandType enum. This field is set when the server wants the agent to
+This field is set when the server wants the agent to
 perform a restart or shutdown command. This field must not be set with other fields
 besides instance_uid or capabilities. All other fields will be ignored and the
 agent will execute the command.
