@@ -248,7 +248,7 @@ message ServerToAgent {
     AgentPackageAvailable agent_package_available = 6;
     Flags flags = 7;
     ServerCapabilities capabilities = 8;
-    ServerCommand command = 9
+    ServerToAgentCommand command = 9
 }
 ```
 
@@ -366,15 +366,20 @@ besides instance_uid or capabilities. All other fields will be ignored and the
 agent will execute the command.
 
 ```protobuf
-enum CommandType {
-    // The agent should restart. This request will be ignored if the agent does not
-    // support restart.
-    Restart = 0;
+// ServerToAgentCommand is sent from the server to the agent to request that the agent
+// perform a command.
+message ServerToAgentCommand {
+    enum CommandType {
+        // The agent should restart. This request will be ignored if the agent does not
+        // support restart.
+        Restart = 0;
 
-    // The agent should shutdown. This request will be ignored if the agent does not
-    // support shutdown. Shutdown is permanent and the agent will no longer be running
-    // or connected to the management server.
-    Shutdown = 1;
+        // The agent should shutdown. This request will be ignored if the agent does not
+        // support shutdown. Shutdown is permanent and the agent will no longer be running
+        // or connected to the management server.
+        Shutdown = 1;
+    }
+    CommandType type = 1;
 }
 ```
 
